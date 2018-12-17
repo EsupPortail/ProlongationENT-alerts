@@ -1,0 +1,105 @@
+.menu {
+      padding-bottom: 1em;
+      background-color: #f7f5fa;
+      border-radius: 5px;
+}
+.menu h2 {  margin-top: 0.3em; color: #777;  }
+.hide {
+    display:none;
+}
+
+#app .message {
+    width:100%;
+}
+.message h2 {
+    display: block;
+    width: calc(100%-60px);
+    margin: 0;
+
+}
+.message {
+    position: relative;
+    border-top: 1px solid #F1F1F1;
+}
+
+.modal-main {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(100, 105, 110);              /* garder les 2 lignes */ 
+    background: rgba(100, 105, 110, 0.1);  
+}
+#main {  background: #fff;  margin: 10%; margin-top: 100px;  padding: 20px;  border-radius: 10px;     } 
+body {
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+    background: rgba(30,30, 30, 0.7);
+} 
+.modal-main { background: rgba(1, 1, 1, 0.15);  } 
+.modal-main #main {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1100px;
+    margin-top: 100px;
+    padding: 20px  ;
+    padding-left: 35px;
+    padding-right: 35px;
+    border: 4px solid #aaa;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    box-shadow: 3px 6px 3px rgba(0, 0, 0, .50);
+}
+.datealerte {text-align: right;  margin:0; }
+
+
+.modal-main button {  
+	overflow: visible;
+	display: block;
+	position: relative;
+	width: 135px;
+	padding: 3px;
+	margin-left: auto;
+	margin-top: 15px;
+									        } 
+.modal-main .menu {
+    padding-bottom: 1em;
+    background-color: #fff; 
+    border-radius: 0px; 
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border: 0px; 
+    border-bottom: 1px dotted #666;
+}
+
+.modal-main .menu h2 {
+    margin-top: 0.3em;
+    color: #777;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 26px;
+    font-family: verdana,Helvetica,Arial,sans-serif;
+    text-shadow: 0 1px 1px rgba(56,56,56,.4);
+}
+
+
+.modal-main .message {
+    position: relative; 
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border: 0px;    
+    border-bottom: 1px dotted #666;
+}
+.modal-main .message a { color: 20558A;   }
+.modal-main .message h2 {
+    display: block;
+    color: #CF4A02;
+    font-size: 22px;
+    font-family: "Century Gothic",Helvetica,Arial,sans-serif;
+    margin-bottom: 20px;
+}

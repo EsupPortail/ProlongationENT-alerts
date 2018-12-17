@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alerte</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link href="dist/css/bootstrap.min.css"  rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<script src="js/vue.js"></script>
+</head>
+<body>
+  <div class="modal-main">
+	<div id="main">
+		<div class="menu">
+			<h2>Alerte</h2>
+		</div>
+        <div v-for="msg in msgs" class='message' >
+		<p v-html="msg.start_date" class="datealerte"></p>	
+		<h2>{{msg.title}} </h2>
+            <p v-html="msg.description"></p>
+        </div>
+
+        <button @click="close">FERMER</button>
+	</div>
+  </div>
+<script>
+var layout_url = "https://ent-test.univ-paris1.fr/EsupUserApps/layout";
+var restdb_url = "https://restdb-test.univ-paris1.fr/alerts/msgs_info/$user";
+
+function loadScript(url, params) {
+    var elt = document.createElement("script");
+    elt.setAttribute("type", "text/javascript");
+    elt.setAttribute("src", url + (params && params.length ? "?" + params.join('&') : ''));
+    elt.setAttribute("async", "async");
+    elt.setAttribute("charset", "utf-8"); // workaround IE ignoring Content-Type
+    document.head.appendChild(elt);
+}
+
+// !! use once at a time
+function jsonp(url, callback) {
+    window.restdb_callback = callback;
+    loadScript(url, [ "callback=window.restdb_callback"]);
+}
+
+function blind_json_xhr(method, url, json) {
+    var req = new XMLHttpRequest();
+    if (!req) return;
+    req.open(method, url, true);
+    req.responseType = 'json';
+    req.withCredentials = true;
+    req.setRequestHeader("Content-Type", "application/json");
+    req.send(JSON.stringify(json));
+}
+
+new Vue({
+	el: '#main',
+    created:function() {
+		this.msgs = this.fetchData(); 
+	},
+	data: {
+        displayAll: false,
+		msgs: []
+	},
+	methods: {
+		fetchData:function() {
+			var Messages = [];
+			jsonp(layout_url, function (lay) {
+				jsonp(restdb_url, function (db) {
+					lay.layout.folders.forEach(function(folder) {
+						if ( folder.title === "__hidden__") {
+							folder.portlets.forEach(function(msg) {
+								// remise à zéro du masquage des messages
+								blind_json_xhr('PUT', restdb_url + "/" + msg.fname, { hide: true });
+								if (msg.fname.indexOf('alert_') != -1) {
+									msg.read = db[msg.fname] && db[msg.fname].read;
+									if (typeof msg.startDate !== 'undefined') {
+									    la_date = new Date(msg.startDate);
+									    msg.start_date = la_date.toLocaleDateString();
+									 }else {
+										msg.start_date = "&nbsp;";
+									 }
+                                    Messages.push(msg);
+								}
+
+							});
+						}
+					});	
+				});						
+			});
+			return Messages;
+     },
+     close:function() {
+      window.parent.postMessage('ProlongationENT:alert:close', '*');
+
+     },
+	}
+});
+
+</script>
+
+</body>
+</html>
