@@ -68,9 +68,11 @@ new Vue({
 					lay.layout.folders.forEach(function(folder) {
 						if ( folder.title === "__hidden__") {
 							folder.portlets.forEach(function(msg) {
-								// remise à zéro du masquage des messages
-								blind_json_xhr('PUT', restdb_url + "/" + msg.fname, { hide: true });
-								if (msg.fname.indexOf('alert_') != -1) {
+								if (msg.fname.match(/^alert_/)) {
+
+								    // remise à zéro du masquage des messages
+								    blind_json_xhr('PUT', restdb_url + "/" + msg.fname, { hide: true });
+
 									msg.read = db[msg.fname] && db[msg.fname].read;
 									if (typeof msg.startDate !== 'undefined') {
 									    la_date = new Date(msg.startDate);
